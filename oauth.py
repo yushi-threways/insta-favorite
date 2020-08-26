@@ -10,7 +10,7 @@ browser = webdriver.Chrome("/usr/local/bin/chromedriver") #Chromeを動かすド
 loginURL = "https://www.instagram.com/" #ログインする際のページ
 tagSearchURL = "https://www.instagram.com/explore/tags/{}/?hl=ja" #.format()で{}の中の値を入れられるようになっている
 
-tagName = "ワンピースコーデ" #タグの名前 #よみうりランド
+tagName = "ロリータ服" #タグの名前
 
 
 #selectors
@@ -35,6 +35,8 @@ mediaList = []
 #counter
 
 likedCounter = 0
+limitHour = time.strftime('22:00')
+limitCount = 400
 
 if __name__ == '__main__':
 
@@ -71,18 +73,26 @@ if __name__ == '__main__':
 
         # 次へボタンが表示されるまで
         while True:
-            try:
-                # abc = random.randint(random.randint(20, 100), random.randint(110, 180))
-                # print(str(abc)+"秒待機します")
-                time.sleep(6)
-                browser.find_element_by_class_name("fr66n").click()
-                browser.implicitly_wait(10)
-                likedCounter += 1
-                print("liked {} of {}".format(likedCounter,mediaCounter))
-                browser.find_element_by_css_selector(nextPagerSelector).click()
-            except Exception as e:
-                print(e)
-                browser.find_element_by_css_selector(nextPagerSelector).click()
+            if time.strftime('%H:%M') < limitHour and likedCounter < limitCount:
+                try:
+                    ramdomTime = random.randint(random.randint(20, 80), random.randint(90, 130))
+                    print(str(ramdomTime)+"秒待機します")
+                    time.sleep(ramdomTime)
+                    # browser.find_element_by_class_name("fr66n").click()
+                    webdriver.ActionChains(browser).double_click(browser.find_element_by_class_name("_9AhH0")).perform()
+                    browser.implicitly_wait(10)
+                    likedCounter += 1
+                    print("liked {} of {}".format(likedCounter,mediaCounter))
+                    browser.find_element_by_css_selector(nextPagerSelector).click()
+                except Exception as e:
+                    print(e)
+                    browser.find_element_by_css_selector(nextPagerSelector).click()
+            else:
+                if time.strftime('%H:%M') > limitHour:
+                    print("22時になったので終了しました")
+                elif likedCounter > limitCount:
+                    print("いいね数が{}を超えたので終了しました".format(likedCounter))
+                break
         break #for文自体も終了させる
 
     print("You liked {} media".format(likedCounter))
