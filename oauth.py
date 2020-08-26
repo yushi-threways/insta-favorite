@@ -3,9 +3,9 @@ from selenium.webdriver.common.keys import Keys
 import urllib.parse
 import time
 import random
+import settings
 
 browser = webdriver.Chrome("/usr/local/bin/chromedriver") #Chromeを動かすドライバを読み込み
-
 
 loginURL = "https://www.instagram.com/" #ログインする際のページ
 tagSearchURL = "https://www.instagram.com/explore/tags/{}/?hl=ja" #.format()で{}の中の値を入れられるようになっている
@@ -17,19 +17,16 @@ tagName = "ワンピースコーデ" #タグの名前 #よみうりランド
 #ここには書くページのSelectorを選ぶ。x-pathもしくはcss selector
 
 loginPath = '//*[@id="react-root"]/section/main/article/div[2]/div[2]/p/a' #xpath @https://www.instagram.com/
-usernamePath = '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div/div[1]/div/input' #xpath @https://www.instagram.com/
-passwordPath = '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div/div[2]/div/input' #xpath @https://www.instagram.com/
 
 notNowPath = '//*[@id="react-root"]/div/div[2]/a[2]'
 
 mediaSelector = 'div.v1Nh3' #表示されているメディアのwebelement @https://www.instagram.com/explore/tags/%E3%82%88%E3%81%BF%E3%81%86%E3%82%8A%E3%83%A9%E3%83%B3%E3%83%89/?hl=ja
-likeXpath = '/html/body/div[3]/div/div[2]/div/article/div[2]/section[1]/a[1]'
 nextPagerSelector = 'a.coreSpriteRightPaginationArrow' #次へボタン
 
 #USER INFO
 
-username = "lesmul.online"
-password = "lesmul5457" 
+username = settings.username
+password = settings.password 
 
 #list
 
